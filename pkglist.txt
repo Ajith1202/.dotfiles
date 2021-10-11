@@ -101,6 +101,7 @@ npm
 ntfs-3g
 orca
 os-prober
+pacgraph
 pacman-contrib
 patch
 pavucontrol
@@ -115,6 +116,7 @@ rygel
 sassc
 scrot
 simple-scan
+stow
 sudo
 sushi
 telegram-desktop
@@ -123,6 +125,7 @@ totem
 tracker
 tracker-miners
 tracker3-miners
+tree
 ttf-fira-code
 vim
 vino
