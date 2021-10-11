@@ -1,0 +1,6 @@
+betterlockscreen
+polybar
+rtl8821ce-dkms-git
+snapd
+visual-studio-code-bin
+yay
