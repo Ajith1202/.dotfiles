@@ -5,6 +5,7 @@ baobab
 base
 binutils
 bison
+bluez-utils
 calc
 catimg
 cheese
