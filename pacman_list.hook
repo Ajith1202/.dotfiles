@@ -1,0 +1,15 @@
+# Put this in /etc/pacman.d/hooks/
+
+# Used for maintaining an up-to-date list of installed packages from repo and AUR.
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Remove
+Target = *
+
+[Action]
+Description = Create a backup list of all installed packages
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/pacman -Qqen > "$HOME/.dotfiles/pkglist.txt"; /usr/bin/pacman -Qqem > "$HOME/.dotfiles/pkglist_aur.txt"'
+
