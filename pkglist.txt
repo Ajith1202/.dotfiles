@@ -79,6 +79,8 @@ i3-gaps
 i3blocks
 i3status
 ifplugd
+jdk-openjdk
+jre-openjdk
 libreoffice-fresh
 linux
 linux-firmware

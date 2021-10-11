@@ -11,5 +11,5 @@ Target = *
 [Action]
 Description = Create a backup list of all installed packages
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/pacman -Qqen > "$HOME/.dotfiles/pkglist.txt"; /usr/bin/pacman -Qqem > "$HOME/.dotfiles/pkglist_aur.txt"'
+Exec = /bin/sh -c '/usr/bin/pacman -Qqen > "/home/ajith/.dotfiles/pkglist.txt"; /usr/bin/pacman -Qqem > "/home/ajith/.dotfiles/pkglist_aur.txt" 2> /dev/null; exit'
 
