@@ -18,6 +18,8 @@ call plug#begin("~/.config/nvim/plugged")
 
     Plug 'dylanaraps/wal.vim'
 
+    Plug 'is0n/fm-nvim'
+
 call plug#end() " Everything after this line will be the config section
 
 set showmatch
