@@ -32,7 +32,6 @@ gdm
 gedit
 git
 gnome-backgrounds
-gnome-books
 gnome-boxes
 gnome-calculator
 gnome-calendar
@@ -63,7 +62,6 @@ gnome-tweaks
 gnome-user-docs
 gnome-user-share
 gnome-video-effects
-gnome-weather
 grilo-plugins
 grub
 gtk-engine-murrine
@@ -111,6 +109,7 @@ patch
 pavucontrol
 picom
 pkgconf
+postgresql
 python-pip
 python-pywal
 ranger
