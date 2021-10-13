@@ -81,6 +81,7 @@ i3status
 ifplugd
 jdk-openjdk
 jre-openjdk
+kitty
 libreoffice-fresh
 linux
 linux-firmware
@@ -88,6 +89,7 @@ linux-headers
 lxappearance
 m4
 make
+mesa-demos
 mutter
 nano
 nautilus
@@ -130,6 +132,7 @@ tracker-miners
 tracker3-miners
 tree
 ttf-fira-code
+ttf-fira-mono
 vim
 vino
 vlc

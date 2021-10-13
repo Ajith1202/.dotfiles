@@ -18,7 +18,7 @@ exec_always --no-startup-id bash ~/.config/polybar/forest/scripts/pywal.sh ~/Dow
 exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest 
 
 # start a terminal
-bindsym $super+Return exec gnome-terminal
+bindsym $super+Return exec kitty
 
 # start dmenu (a program launcher)
 bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=8'"
