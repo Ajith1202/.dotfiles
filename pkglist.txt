@@ -79,6 +79,7 @@ i3-gaps
 i3blocks
 i3status
 ifplugd
+intellij-idea-community-edition
 jdk-openjdk
 jre-openjdk
 kitty
