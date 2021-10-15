@@ -126,6 +126,7 @@ set undofile " set undotree to save to file
 
 nnoremap <leader>u :UndotreeShow<CR>
 
+nnoremap <Space>t :tabnew<CR>
 
 " if (has("termguicolors"))
 " set termguicolors

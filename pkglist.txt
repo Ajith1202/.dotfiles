@@ -193,6 +193,7 @@ xorg-xwayland
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
+xsel
 xsettingsd
 yelp
 zsh

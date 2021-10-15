@@ -12,7 +12,7 @@ floating_modifier $super
 exec --no-startup-id hsetroot -center ~/Downloads/Wallpapers/zKjFPwD.jpeg
 exec --no-startup-id xsettingsd &
 # exec --no-startup-id compton -b
-exec_always compton -b
+exec_always picom -b --experimental-backends
 
 exec_always --no-startup-id bash ~/.config/polybar/forest/scripts/pywal.sh ~/Downloads/Wallpapers/Wallp/
 exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest 
