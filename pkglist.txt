@@ -110,7 +110,6 @@ pacgraph
 pacman-contrib
 patch
 pavucontrol
-picom
 pkgconf
 postgresql
 python-pip
