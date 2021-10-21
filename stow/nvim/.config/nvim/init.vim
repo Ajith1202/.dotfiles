@@ -18,7 +18,22 @@ call plug#begin("~/.config/nvim/plugged")
 
     Plug 'dylanaraps/wal.vim'
 
-    Plug 'is0n/fm-nvim'
+    "Plug 'is0n/fm-nvim'
+
+    Plug 'liuchengxu/vim-which-key'
+
+    " On-demand lazy load
+    Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
+    " To register the descriptions when using the on-demand load feature,
+    " use the autocmd hook to call which_key#register(), e.g., register for the Space key:
+    " autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
+
+    Plug 'glepnir/dashboard-nvim'
+
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+
 
 call plug#end() " Everything after this line will be the config section
 
@@ -35,6 +50,8 @@ set number	" Line numbers
 filetype plugin indent on
 syntax on
 " set cursorline
+
+let mapleader = "\<Space>"
 
 " NERDTree
 let g:NERDTreeShowHidden = 1 
@@ -120,6 +137,8 @@ let g:lightline = {
   \     }
   \ }
 
+let g:dashboard_default_exclusive = 'telescope'
+
 
 set undodir=~/.config/nvim/undodir " set undotree file directory
 set undofile " set undotree to save to file
@@ -127,6 +146,22 @@ set undofile " set undotree to save to file
 nnoremap <leader>u :UndotreeShow<CR>
 
 nnoremap <Space>t :tabnew<CR>
+
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+
+
 
 " if (has("termguicolors"))
 " set termguicolors

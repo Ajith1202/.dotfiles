@@ -3,5 +3,6 @@ picom-tryone-git
 polybar
 rtl8821ce-dkms-git
 snapd
+vim-plug
 visual-studio-code-bin
 yay

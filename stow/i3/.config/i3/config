@@ -9,7 +9,7 @@ font pango: Noto Sans 8
 floating_modifier $super
 
 #autostart
-exec --no-startup-id hsetroot -center ~/Downloads/Wallpapers/zKjFPwD.jpeg
+#exec --no-startup-id hsetroot -center ~/Downloads/Wallpapers/zKjFPwD.jpeg
 exec --no-startup-id xsettingsd &
 # exec --no-startup-id compton -b
 exec_always picom -b --experimental-backends
@@ -29,8 +29,11 @@ bindsym $super+d exec rofi -lines 10 -padding 12 -width 60 -location 0 -show dru
 bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
 bindsym $super+l exec betterlockscreen -l dim
 bindsym $super+Shift+f exec firefox
-#bindsym $super+Shift+f exec nautilus;focus
+bindsym $super+Shift+e exec emacs
 bindsym $super+Shift+v exec code
+
+# Toggle polybar visibility using polybar-msg
+bindsym $super+p exec polybar-msg cmd toggle
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
@@ -189,7 +192,7 @@ exec_always --no-startup-id exec i3-workspace-names-daemon
 
 
 # i3-gaps
-gaps inner 7
+gaps inner 4
 gaps outer 1
 
 # Only enable gaps on a workspace when there is at least one container
