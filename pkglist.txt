@@ -9,6 +9,7 @@ blueman
 bluez-utils
 calc
 catimg
+check
 cheese
 chromium
 clang
@@ -83,7 +84,7 @@ i3-gaps
 i3blocks
 i3status
 ifplugd
-intellij-idea-community-edition
+iw
 jdk-openjdk
 jre-openjdk
 kitty
@@ -114,6 +115,7 @@ pacgraph
 pacman-contrib
 patch
 pavucontrol
+pdfarranger
 pkgconf
 postgresql
 python-isort
@@ -204,4 +206,5 @@ xorg-xwud
 xsel
 xsettingsd
 yelp
+youtube-dl
 zsh

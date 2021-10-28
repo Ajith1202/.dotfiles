@@ -1,4 +1,5 @@
 betterlockscreen
+eclipse-java
 picom-tryone-git
 polybar
 rtl8821ce-dkms-git
