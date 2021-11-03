@@ -11,11 +11,13 @@ floating_modifier $super
 #autostart
 #exec --no-startup-id hsetroot -center ~/Downloads/Wallpapers/zKjFPwD.jpeg
 exec --no-startup-id xsettingsd &
+exec_always --no-startup-id bash ~/.dotfiles/run_xmodmap.sh 
 # exec --no-startup-id compton -b
 exec_always picom -b --experimental-backends
 exec_always feh --bg-fill --randomize ~/Downloads/Wallpapers/Wallp/*
 
-# Uncomment below two lines to sync polybar colorscheme with pywal
+exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest
+# Uncomment below two lines to sync polybar colorscheme with pywal (comment out the above line also)
 # exec_always --no-startup-id bash ~/.config/polybar/forest/scripts/pywal.sh ~/Downloads/Wallpapers/Wallp/
 # exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest
 

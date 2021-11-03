@@ -83,6 +83,7 @@ i3-gaps
 i3blocks
 i3status
 ifplugd
+intellij-idea-community-edition
 iw
 jdk-openjdk
 jre-openjdk
@@ -94,6 +95,7 @@ linux-headers
 lxappearance
 m4
 make
+mariadb
 mesa-demos
 mutter
 nano
@@ -131,6 +133,7 @@ sassc
 scrot
 shellcheck
 simple-scan
+steam
 stow
 sudo
 sushi

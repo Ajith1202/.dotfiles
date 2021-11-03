@@ -1,5 +1,7 @@
 betterlockscreen
 eclipse-java
+gnome-network-displays
+mariadb-jdbc
 picom-tryone-git
 polybar
 rtl8821ce-dkms-git

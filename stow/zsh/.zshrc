@@ -50,6 +50,7 @@ SPACESHIP_PROMPT_ORDER=(
   char          # Prompt character
 )
 
+#SPACESHIP_CHAR_SYMBOL="⇒"
 #SPACESHIP_CHAR_SYMBOL = ➜
 #SPACESHIP_CHAR_SYMBOL_ROOT = $SPACESHIP_CHAR_SYMBOL
 #SPACESHIP_CHAR_SYMBOL_SECONDARY = $SPACESHIP_CHAR_SYMBOL
@@ -181,8 +182,8 @@ export PATH=$PATH:/home/.config/rofi/bin
 #}
 
 export PATH="$PATH:/home/ajith/.local/bin"
+export CLASSPATH=/usr/share/java/mariadb-jdbc/mariadb-java-client.jar:$CLASSPATH
 
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-
 
 alias v="nvim"
