@@ -1,0 +1,427 @@
+#+title Emacs Configuration
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el
+
+
+* Basic UI Configuration
+** Bars
+  #+begin_src emacs-lisp
+
+    (setq inhibit-startup-message t)
+
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (tooltip-mode -1)
+    (set-fringe-mode 10)
+    (menu-bar-mode -1)
+
+  #+end_src 
+
+** Line numbers
+  #+begin_src emacs-lisp
+
+    (column-number-mode)
+    (global-display-line-numbers-mode t)
+
+  #+end_src
+
+
+Disable line numbers for some modes
+  #+begin_src emacs-lisp
+
+    (dolist (mode '(org-mode-hook
+		    term-mode-hook
+		    eshell-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+  #+end_src
+  
+** Font Configuration
+   #+begin_src emacs-lisp
+
+     (set-face-attribute 'default nil :font "JetBrains Mono" :height 120)
+
+   #+end_src
+   
+* Global Settings
+** Make ESC quit prompts
+ #+begin_src emacs-lisp
+
+   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+ #+end_src
+
+** Backup Management
+   #+begin_src emacs-lisp
+
+     (setq backup-directory-alist `(("." . "~/.emacs_saves")))
+
+     (setq delete-old-versions t)
+
+   #+end_src
+
+* Package Management
+** Initialize package sources
+  #+begin_src emacs-lisp
+
+    (require 'package)
+
+  #+end_src
+  
+** Package archives
+  #+begin_src emacs-lisp
+
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+  #+end_src
+
+** Use-package
+   #+begin_src emacs-lisp
+
+     (unless (package-installed-p 'use-package)
+       (package-install 'use-package))
+
+     (require 'use-package)
+     (setq use-package-always-ensure t)
+
+   #+end_src
+
+* Packages
+** Ivy
+
+   #+begin_src emacs-lisp
+
+     (use-package ivy
+       :bind (("C-s" . swiper)
+	      :map ivy-minibuffer-map
+	      ("TAB" . ivy-alt-done)
+	      ("C-l" . ivy-alt-done)
+	      ("C-j" . ivy-next-line)
+	      ("C-k" . ivy-previous-line)
+	      :map ivy-switch-buffer-map
+	      ("C-k" . ivy-previous-line)
+	      ("C-l" . ivy-done)
+	      ("C-d" . ivy-switch-buffer-kill)
+	      :map ivy-reverse-i-search-map
+	      ("C-k" . ivy-previous-line)
+	      ("C-d" . ivy-reverse-i=search-kill))
+       :config
+       (ivy-mode 1))
+
+   #+end_src
+   
+** Ivy-Rich
+   #+begin_src emacs-lisp
+
+     (use-package ivy-rich
+       :init
+       (ivy-rich-mode 1))
+
+   #+end_src 
+
+** Swiper
+   #+begin_src emacs-lisp
+
+     (use-package swiper :ensure t)
+
+   #+end_src
+   
+** Counsel
+   #+begin_src emacs-lisp
+
+     (use-package counsel
+       :ensure t
+       :bind (("M-x" . counsel-M-x)
+	      ("C-x b" . counsel-ibuffer)
+	      ("C-x C-f" . counsel-find-file)
+	      :map minibuffer-local-map
+	      ("C-r" . 'counsel-minibuffer-history)))
+
+   #+end_src
+   
+** Doom Themes 
+
+   #+begin_src emacs-lisp
+
+	  (use-package doom-themes
+	    :ensure t
+	    :config
+	    ;; Global settings (defaults)
+	    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+		  doom-themes-enable-italic t) ; if nil, italics is universally disabled
+	    (load-theme 'doom-one t))
+
+	    ;; or for treemacs users
+	    ;;(setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+	    ;;(doom-themes-treemacs-config)
+	    ;; Corrects (and improves) org-mode's native fontification.
+	    ;;(doom-themes-org-config))
+
+   #+end_src
+
+   Brighter comments for doom-one theme.
+   #+begin_src emacs-lisp
+
+     (defcustom doom-one-brighter-comments 0
+       "If non-nil, comments will be highlighted in more vivid colors."
+       :group 'doom-one-theme
+       :type 'boolean)
+
+   #+end_src
+   
+** Doom Modeline
+   #+begin_src emacs-lisp
+
+     (use-package doom-modeline
+       :ensure t
+       :init (doom-modeline-mode 1))
+
+   #+end_src
+   
+** Rainbow Delimiters
+Rainbow Delimiters for better Elisp readability
+#+begin_src emacs-lisp
+
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+
+#+end_src
+
+** Which-key
+   #+begin_src emacs-lisp
+
+     (use-package which-key
+       :init (which-key-mode)
+       :diminish which-key-mode
+       :config
+       (setq which-key-idle-delay 0.4))
+
+   #+end_src
+
+** Helpful
+
+   For better help pages (C-h)
+   #+begin_src emacs-lisp
+
+     (use-package helpful
+       :ensure t
+       :custom
+       (counsel-describe-function-function #'helpful-callable)
+       (counsel-describe-variable-function #'helpful-variable)
+       :bind
+       ([remap describe-function] . counsel-describe-function)
+       ([remap describe-command] . helpful-command)
+       ([remap describe-command] . counsel-describe-variable)
+       ([remap describe-command] . helpful-key))
+
+   #+end_src
+
+** General
+   For better keybindings management
+   #+begin_src emacs-lisp
+
+     (use-package general
+       :config
+       (general-create-definer ajith/leader-keys
+	 :keymaps '(normal visual emacs)
+	 :prefix "SPC")
+       (ajith/leader-keys
+	":" '(counsel-M-x :which-key "commands")
+	"," '(switch-to-buffer :which-key "switch buffer")
+	"." '(counsel-projectile-find-file :which-key "find file in project")
+	"SPC" '(counsel-find-file :which-key "find file")
+
+	;; Toggles
+	"t" '(:ignore t :which-key "toggles")
+	"tt" '(counsel-load-theme :which-key "choose theme")
+
+	;; Files
+	"f" '(:ignore t :which-key "file")
+	"ff" '(counsel-find-file :which-key "find file")
+
+	;; Buffers
+	"b" '(:ignore t :which-key "buffer")
+	"bb" '(switch-to-buffer :which-key "switch buffer")
+	"bk" '(kill-current-buffer :which-key "kill buffer")
+	"bn" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :which-key "new scratch buffer")
+
+	;; Windows
+	"w" '(:ignore t :which-key "window")
+	"ww" '(evil-window-next :which-key "switch window")
+	"wc" '(evil-window-delete :which-key "close window")
+	"wv" '(evil-window-vsplit :which-key "vertical split")
+	"ws" '(evil-window-split :which-key "horizontal split")
+	"wh" '(evil-window-left :which-key "left window")
+	"wj" '(evil-window-down :which-key "down window")
+	"wk" '(evil-window-up :which-key "up window")
+	"wl" '(evil-window-right :which-key "right window")
+   
+	;; Git
+	"g" '(:ignore t :which-key "git")
+	"gg" '(magit-status :which-key "magit status")
+
+	;; Open
+	"o" '(:ignore t :which-key "open")
+	"ot" '(term :which-key "open terminal")
+       ))
+
+   #+end_src
+
+** Evil Mode
+   #+begin_src emacs-lisp
+
+     (use-package evil
+       :init
+       (setq evil-want-integration t)
+       (setq evil-want-keybinding nil)
+       (setq evil-want-C-u-scroll t)
+       (setq evil-want-C-i-jump nil)
+       :config
+       (evil-mode 1)
+       ;;(define-key evil-insert-state-map (kbd "jj") 'evil-normal-state) 
+       ;;(define-key evil-visual-state-map (kbd "vv") 'evil-normal-state)
+       ;;(define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+       (evil-set-initial-state 'messages-buffer-mode 'normal)
+       (evil-set-initial-state 'dashboard-mode 'normal)
+       (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+       (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+
+     (require 'evil)
+
+   #+end_src 
+
+** Evil Collection
+   #+begin_src emacs-lisp
+
+     (use-package evil-collection
+       :after evil
+       :config
+       (evil-collection-init))
+
+   #+end_src
+
+** Hydra
+   #+begin_src emacs-lisp
+
+     (use-package hydra)
+
+     (defhydra hydra-text-scale (:timeout 4)
+       "scale text"
+       ("j" text-scale-increase "in")
+       ("k" text-scale-decrease "out")
+       ("f" nil "finished" :exit t))
+
+     (ajith/leader-keys
+	"ts" '(hydra-text-scale/body :which-key "scale text"))
+
+   #+end_src
+
+** Projectile
+   For better project management
+   #+begin_src emacs-lisp
+
+     (use-package projectile
+       :diminish projectile-mode
+       :config (projectile-mode)
+       :init
+       (when (file-directory-p "~/Dev/Projects")
+	 (setq projectile-project-search-path '("~/Dev/Projects")))
+       (setq projectile-switch-project-action #'projectile-dired))
+
+   #+end_src
+
+** Counsel Projectile
+   #+begin_src emacs-lisp
+
+     (use-package counsel-projectile
+       :config (counsel-projectile-mode))
+
+     (ajith/leader-keys
+	"p" '(projectile-command-map :which-key "projectile"))
+
+   #+end_src
+   
+** Magit
+   #+begin_src emacs-lisp
+
+     (use-package magit
+       :commands (magit-status magit-get-current-branch)
+       :custom
+       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+   #+end_src
+
+** Org
+   #+begin_src emacs-lisp
+
+     ;;(defun ajith/org-mode-setup ()
+       ;;(org-indent-mode)
+       ;;(variable-pitch-mode 1)
+       ;;(auto-fill-mode 0)
+       ;;(visual-line-mode 1)
+       ;;(setq evil-auto-indent nil))
+
+     (use-package org
+       ;;:hook (org-mode . ajith/org-mode-setup)
+       :config
+       (setq org-ellipsis " ►"))
+
+   #+end_src
+
+** Org Bullets
+   #+begin_src emacs-lisp
+
+     (use-package org-bullets
+       :after org
+       :hook (org-mode . org-bullets-mode)
+       :custom
+       (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+   #+end_src
+
+** Undo Tree
+   Undo functionality for evil
+   #+begin_src emacs-lisp
+
+     (use-package undo-tree
+       :ensure t
+       :after evil
+       :diminish
+       :config
+       (evil-set-undo-system 'undo-tree)
+       (global-undo-tree-mode 1))
+
+   #+end_src
+   
+* Org Mode 
+** Auto-tangle Configuration files
+    #+begin_src emacs-lisp
+
+      (defun ajith/org-babel-tangle-config ()
+	(when (string-equal (buffer-file-name)
+			    (expand-file-name "~/.dotfiles/emacs/config.org"))
+	  (let ((org-confirm-babel-evaluate nil))
+		(org-babel-tangle))))
+	(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'ajith/org-babel-tangle-config)))
+
+    #+end_src
+ 
+** Org-tempo
+   Easier source code blocks
+   #+begin_src emacs-lisp
+
+     (require 'org-tempo)
+
+     (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+     (add-to-list 'org-structure-template-alist '("py" . "src python"))
+
+   #+end_src
+
+
