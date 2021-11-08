@@ -446,16 +446,15 @@ Keybindings
 
 ** Evil-commentary
 
-| Map  | Functionality                            |
-|------+------------------------------------------|
-| gcc  | Comment out a line                       |
-| gc   | Comment out selected area/motion command |
-| gcap | Comment out the paragraph                |
-| 3gcc | Comment out 3 lines                      |
-| gy   | Comments out the selected area, and      |
-|      | also copies the area onto clipboard      |
-| gyy  | Comments and copies the current line     |
-| gyyp | Same as gyy and also pastes the line     |
+| Map  | Functionality                                                           |
+|------+-------------------------------------------------------------------------|
+| gcc  | Comment out a line                                                      |
+| gc   | Comment out selected area/motion command                                |
+| gcap | Comment out the paragraph                                               |
+| 3gcc | Comment out 3 lines                                                     |
+| gy   | Comments out the selected area, and also copies the area onto clipboard |
+| gyy  | Comments and copies the current line                                    |
+| gyyp | Same as gyy and also pastes the line                                    |
   
 #+begin_src emacs-lisp
 
@@ -679,6 +678,4 @@ Keybindings
        (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
    #+end_src
-
-
 
