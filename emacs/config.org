@@ -40,13 +40,27 @@ Disable line numbers for some modes
 
   #+begin_src emacs-lisp
 
-     (set-face-attribute 'default nil :font "JetBrains Mono" :height 120)
+     (set-face-attribute 'default nil :font "JetBrains Mono" :height 105)
+     ;;(set-face-attribute 'default nil :font "Iosevka" :height 120)
 
      ;; For emacsclient, the following line is required
      (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
 
   #+end_src
    
+** Scrolling
+
+For smooth scrolling and disabling the automatical recentering of emacs when moving the cursor
+#+begin_src emacs-lisp
+
+  (setq scroll-conservatively 101)
+    ;; (setq scroll-margin 1
+    ;;       scroll-conservatively 0
+    ;;       scroll-up-aggressively 0.01
+    ;;       scroll-down-aggressively 0.01)
+
+#+end_src
+
 * Global Settings
 ** Make ESC quit prompts
 
@@ -182,7 +196,8 @@ Disable line numbers for some modes
 	    ;; Global settings (defaults)
 	    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 		  doom-themes-enable-italic t) ; if nil, italics is universally disabled
-	    (load-theme 'doom-one t)
+	    ;;(load-theme 'doom-one t)
+	    (load-theme 'doom-vibrant t)
 
 	    ;; or for treemacs users
 	    (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
@@ -543,6 +558,10 @@ Keybindings
      ;; Org agenda files
      (setq org-agenda-files '("~/org/task-list.org"))
 
+     (setq org-agenda-start-with-log-mode t)
+     (setq org-log-done 'time)
+     (setq org-log-into-drawer 't)
+
    #+end_src
 
 ** Org Bullets
@@ -556,6 +575,20 @@ Keybindings
        (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
    #+end_src
+
+** Visual Fill Mode
+
+Centering text and document-writing feel for org-mode
+#+begin_src emacs-lisp
+  (defun ajith/org-mode-visual-fill ()
+    (setq visual-fill-column-width 100
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
+
+  (use-package visual-fill-column
+    :defer t
+    :hook (org-mode . ajith/org-mode-visual-fill))
+#+end_src
 
 ** Undo Tree
 
@@ -679,3 +712,31 @@ Keybindings
 
    #+end_src
 
+* Development
+** Language Server
+
+#+begin_src emacs-lisp
+
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :config
+    (lsp-enable-which-key-integration t))
+
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+  (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+#+end_src
+
+** Python
+
+#+begin_src emacs-lisp
+
+  (use-package python-mode
+    :ensure nil
+    :hook (python-mode . lsp-deferred)
+    :custom
+    (python-shell-interpreter "python"))
+
+#+end_src

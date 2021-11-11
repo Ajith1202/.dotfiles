@@ -66,6 +66,7 @@ gnome-tweaks
 gnome-user-docs
 gnome-user-share
 gnome-video-effects
+gparted
 grilo-plugins
 grub
 gtk-engine-murrine
@@ -100,6 +101,7 @@ mesa-demos
 mutter
 nano
 nautilus
+ncdu
 neofetch
 neovim
 netctl

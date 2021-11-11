@@ -187,3 +187,5 @@ export CLASSPATH=/usr/share/java/mariadb-jdbc/mariadb-java-client.jar:$CLASSPATH
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 
 alias v="nvim"
+
+alias pip='noglob pip'
