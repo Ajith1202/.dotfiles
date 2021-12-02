@@ -1,7 +1,6 @@
 #+title Emacs Configuration
 #+PROPERTY: header-args :tangle ~/.emacs.d/init.el
 
-
 * Basic UI Configuration
 ** Bars
    
@@ -31,6 +30,7 @@ Disable line numbers for some modes
 
     (dolist (mode '(org-mode-hook
                     term-mode-hook
+                    treemacs-mode-hook
                     eshell-mode-hook))
       (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -40,11 +40,11 @@ Disable line numbers for some modes
 
   #+begin_src emacs-lisp
 
-     (set-face-attribute 'default nil :font "JetBrains Mono" :height 105)
+     ;;(set-face-attribute 'default t :font "JetBrains Mono" :height 60)
      ;;(set-face-attribute 'default nil :font "Iosevka" :height 120)
 
      ;; For emacsclient, the following line is required
-     (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
+     (add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
 
   #+end_src
    
@@ -62,6 +62,21 @@ For smooth scrolling and disabling the automatical recentering of emacs when mov
 #+end_src
 
 * Global Settings
+** Displaying startup time
+
+#+begin_src emacs-lisp
+
+  ;; Profile emacs startup
+  ;; (add-hook 'emacs-startup-hook
+  ;;           (lambda ()
+  ;;             (message "*** Emacs loaded in %s with %d garbage collections."
+  ;;                      (format "%.2f seconds"
+  ;;                              (float-time
+  ;;                               (time-subtract after-init-time before-init-time)))
+  ;;                      gcs-done)))
+
+#+end_src
+
 ** Make ESC quit prompts
 
  #+begin_src emacs-lisp
@@ -77,6 +92,8 @@ For smooth scrolling and disabling the automatical recentering of emacs when mov
      (setq backup-directory-alist `(("." . "~/.emacs_saves")))
 
      (setq delete-old-versions t)
+     ;; Disabling lockfile creation (#foo files)
+     (setq create-lockfiles nil)
 
    #+end_src
 
@@ -90,6 +107,14 @@ For smooth scrolling and disabling the automatical recentering of emacs when mov
      (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 
    #+end_src
+
+** y or n Instead of yes or no
+
+#+begin_src emacs-lisp
+
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+#+end_src
 
 * Package Management
 ** Initialize package sources
@@ -146,7 +171,7 @@ For smooth scrolling and disabling the automatical recentering of emacs when mov
 	      :map ivy-reverse-i-search-map
 	      ("C-k" . ivy-previous-line)
 	      ("C-d" . ivy-reverse-i=search-kill))
-       :config
+       :init
        (ivy-mode 1))
 
    #+end_src
@@ -161,6 +186,20 @@ For smooth scrolling and disabling the automatical recentering of emacs when mov
        (ivy-rich-mode 1))
 
    #+end_src 
+
+** Ivy prescient
+
+#+begin_src emacs-lisp
+
+    (use-package ivy-prescient
+      :after (counsel ivy)
+      :config
+      (ivy-prescient-mode 1))
+
+  (setq ivy-prescient-retain-classic-highlighting t)
+  (prescient-persist-mode 1)
+
+#+end_src
 
 ** Swiper
 
@@ -274,59 +313,61 @@ Rainbow Delimiters for better Elisp readability
    For better keybindings management
    #+begin_src emacs-lisp
 
-     (use-package general
-       :config
-       (general-create-definer ajith/leader-keys
-         :keymaps '(normal visual emacs)
-         :prefix "SPC")
-       (ajith/leader-keys
-         ":" '(counsel-M-x :which-key "commands")
-         "," '(counsel-switch-buffer :which-key "switch buffer")
-         "." '(counsel-projectile-find-file :which-key "find file in project")
-         "SPC" '(counsel-find-file :which-key "find file")
+          (use-package general
+            :config
+            (general-create-definer ajith/leader-keys
+              :keymaps '(normal visual emacs)
+              :prefix "SPC")
+            (ajith/leader-keys
+              ":" '(counsel-M-x :which-key "commands")
+              "," '(counsel-switch-buffer :which-key "switch buffer")
+              "." '(counsel-projectile-find-file :which-key "find file in project")
+              "SPC" '(counsel-find-file :which-key "find file")
 
-         ;; Toggles
-         "t" '(:ignore t :which-key "toggles")
-         "tt" '(counsel-load-theme :which-key "choose theme")
+              ;; Toggles
+              "t" '(:ignore t :which-key "toggles")
+              "tt" '(counsel-load-theme :which-key "choose theme")
 
-         ;; Files
-         "f" '(:ignore t :which-key "file")
-         "ff" '(counsel-find-file :which-key "find file")
-         "fr" '(counsel-recentf :which-key "recent file")
-         "fp" '((lambda () (interactive) (find-file "~/.dotfiles/emacs/config.org")) :which-key "private config")
+              ;; Files
+              "f" '(:ignore t :which-key "file")
+              "ff" '(counsel-find-file :which-key "find file")
+              "fr" '(counsel-recentf :which-key "recent file")
+              "fp" '((lambda () (interactive) (find-file "~/.dotfiles/emacs/config.org")) :which-key "private config")
 
-         ;; Buffers
-         "b" '(:ignore t :which-key "buffer")
-         "bb" '(counsel-switch-buffer :which-key "switch buffer")
-         "bk" '(kill-current-buffer :which-key "kill buffer")
-         "bp" '(previous-buffer :which-key "previous buffer")
-         "bn" '(next-buffer :which-key "next buffer")
-         "bs" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :which-key "scratch buffer")
+              ;; Buffers
+              "b" '(:ignore t :which-key "buffer")
+              "bb" '(counsel-switch-buffer :which-key "switch buffer")
+              "bk" '(kill-current-buffer :which-key "kill buffer")
+              "bp" '(previous-buffer :which-key "previous buffer")
+              "bn" '(next-buffer :which-key "next buffer")
+              "bs" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :which-key "scratch buffer")
 
-         ;; Windows
-         "w" '(:ignore t :which-key "window")
-         "ww" '(evil-window-next :which-key "switch window")
-         "wc" '(evil-window-delete :which-key "close window")
-         "wv" '(evil-window-vsplit :which-key "vertical split")
-         "ws" '(evil-window-split :which-key "horizontal split")
-         "wh" '(evil-window-left :which-key "left window")
-         "wj" '(evil-window-down :which-key "down window")
-         "wk" '(evil-window-up :which-key "up window")
-         "wl" '(evil-window-right :which-key "right window")
+              ;; Windows
+              "w" '(:ignore t :which-key "window")
+              "ww" '(evil-window-next :which-key "switch window")
+              "wc" '(evil-window-delete :which-key "close window")
+              "wv" '(evil-window-vsplit :which-key "vertical split")
+              "ws" '(evil-window-split :which-key "horizontal split")
+              "wh" '(evil-window-left :which-key "left window")
+              "wj" '(evil-window-down :which-key "down window")
+              "wk" '(evil-window-up :which-key "up window")
+              "wl" '(evil-window-right :which-key "right window")
 
-         ;; Git
-         "g" '(:ignore t :which-key "git")
-         "gg" '(magit-status :which-key "magit status")
+              ;; Git
+              "g" '(:ignore t :which-key "git")
+              "gg" '(magit-status :which-key "magit status")
 
-         ;; Open
-         "o" '(:ignore t :which-key "open")
-         "ot" '(term :which-key "open terminal")
+              ;; Open
+              "o" '(:ignore t :which-key "open")
+              "ot" '(term :which-key "open terminal")
+              "os" '(eshell :which-key "open eshell")
+              "oa" '(org-agenda :which-key "open org agenda")
 
-         ;; Misc
-         "r" '(:ignore t :which-key "reload")
-         "rc" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs Config")
+              ;; Misc
+              "r" '(:ignore t :which-key "reload")
+              "rc" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs Config")
 
-         ))
+              ))
 
    #+end_src
 
@@ -342,18 +383,18 @@ Rainbow Delimiters for better Elisp readability
        (setq evil-want-C-i-jump nil)
        :bind
        (:map evil-motion-state-map
-	     ("gs" . avy-goto-char-timer)
-	:map evil-normal-state-map
-	     ("gs" . avy-goto-char-timer))
-	     :config
-	     (evil-mode 1)
-	     ;;(define-key evil-insert-state-map (kbd "jj") 'evil-normal-state) 
-	     ;;(define-key evil-visual-state-map (kbd "vv") 'evil-normal-state)
-	     ;;(define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-	     (evil-set-initial-state 'messages-buffer-mode 'normal)
-	     (evil-set-initial-state 'dashboard-mode 'normal)
-	     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-	     (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+             ("gs" . avy-goto-char-timer)
+             :map evil-normal-state-map
+             ("gs" . avy-goto-char-timer))
+       :config
+       (evil-mode 1)
+       ;;(define-key evil-insert-state-map (kbd "jj") 'evil-normal-state) 
+       ;;(define-key evil-visual-state-map (kbd "vv") 'evil-normal-state)
+       ;;(define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+       (evil-set-initial-state 'messages-buffer-mode 'normal)
+       (evil-set-initial-state 'dashboard-mode 'normal)
+       (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+       (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
        (require 'evil)
 
@@ -380,7 +421,7 @@ Rainbow Delimiters for better Elisp readability
      (use-package avy)
 
    #+end_src
-
+   
 ** Evil-surround
 
    #+begin_src emacs-lisp
@@ -562,6 +603,9 @@ Keybindings
      (setq org-log-done 'time)
      (setq org-log-into-drawer 't)
 
+     (setq org-capture-templates
+           '(("t" "Tasks" entry (file+headline "~/org/task-list.org" "Inbox")
+              "* TODO %?\n  %i\n  %a" :empty-lines 1)))
    #+end_src
 
 ** Org Bullets
@@ -572,9 +616,21 @@ Keybindings
        :after org
        :hook (org-mode . org-bullets-mode)
        :custom
-       (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+       (org-bullets-bullet-list '("●" "○" "●" "○" "●" "○" "●")))
 
    #+end_src
+
+** Org Download
+
+For drag-and-drop images to org mode
+
+#+begin_src emacs-lisp
+  (use-package org-download
+    :after org)
+
+  ;; Drag and drop to dired
+  (add-hook 'dierd-mode-hook 'org-download-enable)
+#+end_src
 
 ** Visual Fill Mode
 
@@ -610,25 +666,25 @@ Centering text and document-writing feel for org-mode
    #+begin_src emacs-lisp
 
      (use-package dashboard
-	  :ensure t
-	  :init
-	  (setq dashboard-set-heading-icons t)
-	  (setq dashboard-set-file-icons t)
-	  (setq dashboard-banner-logo-title "Vim AND Emacs")
-	  (setq dashboard-startup-banner 'logo)
-	  (setq dashboard-center-content t)
-	  (setq dashboard-set-footer nil)
-	  (setq dashboard-items '((recents . 5)
-				  (agenda . 5)
-				  ;;(bookmarks . 5)
-				  (projects . 5)
-				  ;;(registers . 5)
-				  ))
-	  :config
-	  (dashboard-setup-startup-hook)
-	  (dashboard-modify-heading-icons '((recents . "file-text")
-					    ;;(bookmarks . "book")
-					    )))
+          :ensure t
+          :init
+          (setq dashboard-set-heading-icons t)
+          (setq dashboard-set-file-icons t)
+          (setq dashboard-banner-logo-title "Vim AND Emacs")
+          (setq dashboard-startup-banner 'logo)
+          (setq dashboard-center-content t)
+          (setq dashboard-set-footer nil)
+          (setq dashboard-items '((recents . 5)
+                                  (agenda . 5)
+                                  ;;(bookmarks . 5)
+                                  (projects . 5)
+                                  ;;(registers . 5)
+                                  ))
+          :config
+          (dashboard-setup-startup-hook)
+          (dashboard-modify-heading-icons '((recents . "file-text")
+                                            ;;(bookmarks . "book")
+                                            )))
 
 
      (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
@@ -684,6 +740,38 @@ Centering text and document-writing feel for org-mode
 
    #+end_src
 
+** Company
+
+#+begin_src emacs-lisp
+
+  (use-package company
+    :after lsp-mode
+    :hook (prog-mode . company-mode)
+    :bind
+    (:map company-active-map
+          ("<tab>" . company-complete-selection))
+    (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
+
+#+end_src
+
+** Smartparens
+
+For better parenthesis pairing support
+#+begin_src emacs-lisp
+
+  (use-package smartparens-config
+    :ensure smartparens
+    :config (progn (show-smartparens-global-mode t)))
+
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode)
+
+#+end_src
+
 * Org Mode 
 ** Auto-tangle Configuration files
 
@@ -717,15 +805,39 @@ Centering text and document-writing feel for org-mode
 
 #+begin_src emacs-lisp
 
+  (defun ajith/lsp-mode-setup ()
+    (setq lsp-headerline-breadcrumb-segments '(path-to-project file symbols))
+    (lsp-headerline-breadcrumb-mode))
+
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
+    :hook (lsp-mode . ajith/lsp-mode-setup)
     :init
     (setq lsp-keymap-prefix "C-c l")
     :config
     (lsp-enable-which-key-integration t))
 
+  ;; make sure we have lsp-imenu everywhere we have LSP
+  ;;(require 'lsp-imenu)
+  ;;(add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+
+  (use-package lsp-ui
+    :after lsp-mode
+    :config
+    (setq lsp-ui-sideline-ignore-duplicate t)
+    :hook (lsp-mode . lsp-ui-mode))
+
+  ;; (defun lsp-set-cfg ()
+  ;;   (let ((lsp-cfg `(:pylsp (:configurationSources ("flake8")))))
+  ;;       ;; TODO: check lsp--cur-workspace here to decide per server / project
+  ;;       (lsp--set-configuration lsp-cfg)))
+
+  ;; (add-hook 'lsp-after-initialize-hook 'lsp-set-cfg)
+
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
   (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+  (setq lsp-diagnostics-provider :none)
 
 #+end_src
 
@@ -738,5 +850,22 @@ Centering text and document-writing feel for org-mode
     :hook (python-mode . lsp-deferred)
     :custom
     (python-shell-interpreter "python"))
+
+  ;; Pyvenv for virtual environment support
+  (use-package pyvenv
+    :config
+    (pyvenv-mode t))
+
+  (setq lsp-pyls-plugins-pycodestyle-ignore '("D100" "D103"))
+#+end_src
+
+** C/C++/C#
+
+#+begin_src emacs-lisp
+
+  (use-package ccls
+    :after lsp-mode 
+    :hook ((c-mode c++-mode objc-mode cuda-mode) .
+           (lambda () (require 'ccls) (lsp-deferred))))
 
 #+end_src

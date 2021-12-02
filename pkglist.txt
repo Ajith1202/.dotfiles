@@ -9,6 +9,7 @@ blueman
 bluez-utils
 calc
 catimg
+ccls
 check
 cheese
 chromium
@@ -141,6 +142,18 @@ sudo
 sushi
 telegram-desktop
 texinfo
+texlive-bibtexextra
+texlive-core
+texlive-fontsextra
+texlive-formatsextra
+texlive-games
+texlive-humanities
+texlive-latexextra
+texlive-music
+texlive-pictures
+texlive-pstricks
+texlive-publishers
+texlive-science
 totem
 tracker
 tracker-miners

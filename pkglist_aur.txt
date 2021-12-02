@@ -4,6 +4,7 @@ gnome-network-displays
 mariadb-jdbc
 picom-tryone-git
 polybar
+postman-bin
 rtl8821ce-dkms-git
 snapd
 vim-plug
