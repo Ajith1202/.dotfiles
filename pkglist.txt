@@ -120,6 +120,7 @@ pacman-contrib
 patch
 pavucontrol
 pdfarranger
+pgadmin4
 pkgconf
 postgresql
 python-isort

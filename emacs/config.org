@@ -549,8 +549,8 @@ Keybindings
        :diminish projectile-mode
        :config (projectile-mode)
        :init
-       (when (file-directory-p "~/Dev/Projects")
-         (setq projectile-project-search-path '("~/Dev/Projects")))
+       (when (file-directory-p "~/Dev")
+         (setq projectile-project-search-path '("~/Dev")))
        (setq projectile-switch-project-action #'projectile-dired))
 
    #+end_src
