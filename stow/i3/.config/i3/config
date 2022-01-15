@@ -11,7 +11,7 @@ floating_modifier $super
 #autostart
 #exec --no-startup-id hsetroot -center ~/Downloads/Wallpapers/zKjFPwD.jpeg
 exec --no-startup-id xsettingsd &
-exec_always --no-startup-id bash ~/.dotfiles/run_xmodmap.sh 
+#exec_always --no-startup-id bash ~/.dotfiles/run_xmodmap.sh 
 # exec --no-startup-id compton -b
 exec_always picom -b --experimental-backends
 exec_always feh --bg-fill --randomize ~/Downloads/Wallpapers/Wallp/*

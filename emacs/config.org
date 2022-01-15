@@ -44,7 +44,7 @@ Disable line numbers for some modes
      ;;(set-face-attribute 'default nil :font "Iosevka" :height 120)
 
      ;; For emacsclient, the following line is required
-     (add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
+     (add-to-list 'default-frame-alist '(font . "JetBrains Mono-15"))
 
   #+end_src
    
