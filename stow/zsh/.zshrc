@@ -10,6 +10,7 @@ export ZSH=$HOME/.oh-my-zsh
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="spaceship"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 SPACESHIP_PROMPT_ORDER=(
   time          # Time stamps section
@@ -52,8 +53,8 @@ SPACESHIP_PROMPT_ORDER=(
 
 
 #SPACESHIP_CHAR_SYMBOL="⇒"
-SPACESHIP_CHAR_SYMBOL="ajith_b190369cs "
-#➜
+#SPACESHIP_CHAR_SYMBOL="ajith_b190369cs "
+#SPACESHIP_CHAR_SYMBOL=➜
 #SPACESHIP_CHAR_SYMBOL_ROOT = $SPACESHIP_CHAR_SYMBOL
 #SPACESHIP_CHAR_SYMBOL_SECONDARY = $SPACESHIP_CHAR_SYMBOL
 
@@ -124,7 +125,7 @@ plugins=(
     git
     zsh-syntax-highlighting
     zsh-autosuggestions
-    # colorize
+    colorize
     z
     fzf
 )
@@ -191,3 +192,6 @@ alias v="nvim"
 alias wpa_supplicant="~/hostap/wpa_supplicant/wpa_supplicant"
 
 alias pip='noglob pip'
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

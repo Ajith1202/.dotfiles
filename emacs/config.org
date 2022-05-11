@@ -755,6 +755,7 @@ Centering text and document-writing feel for org-mode
     :custom
     (company-minimum-prefix-length 1)
     (company-idle-delay 0.0))
+  (add-hook 'after-init-hook 'global-company-mode)
 
 #+end_src
 
@@ -769,6 +770,20 @@ For better parenthesis pairing support
 
   (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode)
+
+#+end_src
+
+** Yasnippet
+
+#+begin_src emacs-lisp
+
+  (use-package yasnippet
+    :ensure
+    :config
+    (yas-reload-all)
+    (add-hook 'prog-mode-hook 'yas-minor-mode)
+    (add-hook 'text-mode-hook 'yas-minor-mode)
+    )
 
 #+end_src
 
@@ -869,3 +884,14 @@ For better parenthesis pairing support
            (lambda () (require 'ccls) (lsp-deferred))))
 
 #+end_src
+
+** Rust
+
+#+begin_src emacs-lisp
+
+  (use-package rustic) 
+
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode nil)))
+#+end_src
+ 

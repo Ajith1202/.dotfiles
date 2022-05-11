@@ -16,6 +16,7 @@ exec --no-startup-id xsettingsd &
 exec_always picom -b --experimental-backends
 exec_always feh --bg-fill --randomize ~/Downloads/Wallpapers/Wallp/*
 
+#exec_always --no-startup-id $HOME/polybar-collection/launch.sh
 exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest
 # Uncomment below two lines to sync polybar colorscheme with pywal (comment out the above line also)
 # exec_always --no-startup-id bash ~/.config/polybar/forest/scripts/pywal.sh ~/Downloads/Wallpapers/Wallp/
@@ -27,7 +28,9 @@ bindsym $alt+Return exec kitty
 # start dmenu (a program launcher)
 bindsym $alt+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=8'"
 #bindsym $alt+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8'
-bindsym $alt+d exec rofi -lines 10 -padding 12 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Fira Code 10'
+#bindsym $alt+d exec rofi -lines 10 -padding 12 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Fira Code 10'
+bindsym $alt+d exec rofi  -lines 3 -padding 800 -width 100 -show drun -opacity "85" -bw 0 -bc "$bg-color" -fg "$fg-color" -font 'Fira Code 10'
+bindsym $alt+Tab exec rofi  -lines 3 -padding 800 -width 100 -show window -opacity "85" -bw 0 -bc "$bg-color" -fg "$fg-color" -font 'Fira Code 10'
 
 # common apps keybinds
 bindsym Print exec scrot $HOME/Pictures/'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
@@ -196,8 +199,8 @@ exec_always --no-startup-id exec i3-workspace-names-daemon
 
 
 # i3-gaps
-gaps inner 3
-gaps outer 3
+gaps inner 5
+gaps outer 5
 
 # Only enable gaps on a workspace when there is at least one container
 smart_gaps on
